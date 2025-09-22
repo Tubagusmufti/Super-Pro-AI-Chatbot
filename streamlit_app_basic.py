@@ -94,13 +94,16 @@ st.header("9. Layout with Columns")
 st.write("""
 `st.columns()` helps organize content into multiple columns.
 """)
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 with col1:
     st.write("This is column 1")
     st.button("Button in column 1")
 with col2:
     st.write("This is column 2")
     st.button("Button in column 2")
+with col3:
+    st.write("This is column 3")
+    st.button("Button in column 3")
 
 # 11. Expander
 st.header("10. Expander")
