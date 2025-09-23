@@ -30,34 +30,7 @@ Ensure you have Python installed. It is recommended to use `miniconda` or `conda
 4.  **Run the Streamlit Application**
 
     ```bash
-    streamlit run streamlit_app.py
+    streamlit run streamlit_react_appp.py
 
     The application will open in your web browser.
 
-### Running with Docker (Optional)
-
-1.  **Build the Docker Image**
-
-    Navigate to the project directory and build the Docker image:
-
-    ```bash
-    docker build -t chatbot-streamlit-demo .
-    ```
-
-2.  **Run the Docker Container**
-
-    Run the Docker container, mapping port 8501:
-
-    ```bash
-    docker run -p 8501:8501 chatbot-streamlit-demo
-    ```
-
-    The application will be accessible in your web browser at `http://localhost:8501`.
-
-## Code Structure
-
-- streamlit_app.py: The main Streamlit application file, containing the chatbot UI and logic.
-- database_tools.py: Contains functions for interacting with the sales_data.db database.
-- requirements.txt: Lists all Python dependencies required for the project.
-- streamlit_react_app.py: (Optional) Another Streamlit application, possibly demonstrating React integration.
-- streamlit_react_tools_app.py: (Optional) Another Streamlit application, possibly demonstrating React tools integration.
