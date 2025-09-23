@@ -22,7 +22,7 @@ python-dotenv
 python-docx
 duckduckgo-search
 wikipedia
-pydantic>=2.0
+pydantic>=2.0,<3.0
 pyyaml
 httpx
 transformers
