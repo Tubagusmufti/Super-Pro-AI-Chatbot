@@ -143,10 +143,19 @@ def wikipedia_search(query: str) -> str:
 tools = [web_search, wikipedia_search]
 tool_dict = {tool.name: tool for tool in tools}
 
-# ✅ Perbaikan untuk error Pydantic "class-not-fully-defined"
+
 def get_llm(temperature=0):
+    """
+    Membuat instance ChatGoogleGenerativeAI.
+    """
     try:
         model_to_use = st.session_state.get("model", CFG["model"])
+        # Pastikan API key ada
+        if not st.session_state.get("google_api_key"):
+            st.error("❌ API Key Google tidak ditemukan. Silakan masukkan di sidebar.")
+            print("💥 API Key Google tidak ditemukan.")
+            return None
+
         llm_instance = ChatGoogleGenerativeAI(
             model=model_to_use,
             temperature=temperature,
@@ -155,30 +164,9 @@ def get_llm(temperature=0):
         return llm_instance
     except Exception as e:
         error_msg = f"Error creating LLM: {str(e)}"
-        # Cek jika error terkait Pydantic "not fully defined"
-        if "is not fully defined" in str(e) and "model_rebuild()" in str(e):
-            print(f"🔍 {error_msg}. Mencoba perbaikan dengan model_rebuild()...")
-            try:
-                # Coba muat ulang definisi model
-                ChatGoogleGenerativeAI.model_rebuild()
-                # Coba buat instance lagi
-                llm_instance = ChatGoogleGenerativeAI(
-                    model=model_to_use,
-                    temperature=temperature,
-                    google_api_key=st.session_state.google_api_key
-                )
-                print("✅ Perbaikan LLM berhasil!")
-                return llm_instance
-            except Exception as rebuild_error:
-                final_error_msg = f"Error creating LLM setelah perbaikan: {str(rebuild_error)}"
-                st.error(final_error_msg)
-                print(f"💥 {final_error_msg}")
-                return None
-        else:
-            # Error lainnya
-            st.error(error_msg)
-            print(f"💥 {error_msg}")
-            return None
+        st.error(error_msg)
+        print(f"💥 {error_msg}")
+        return None
 
 @st.cache_resource(show_spinner=False)
 def build_rag(file_path: str, file_type: str):
